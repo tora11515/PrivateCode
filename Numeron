@@ -1,0 +1,77 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+
+
+void decideNumbers(int& a,int& b, int& c)
+{
+    bool test = true;
+    while(test)
+    {
+        a = rand()%10;
+        if(a != 0)test = false;
+    }
+    //test is false
+    while(!test)
+    {
+        b = rand()%10;
+        if(b != a)test = true;
+    }
+    //test is true
+    while(test)
+    {
+        c = rand()%10;
+        if(c != a && c!=b)test = false;
+    }
+}
+
+int eat(int a, int b, int c, int d, int e, int f)
+{
+    int eat = 0;
+    if(a == d)eat++;
+    if(b == e)eat++;
+    if(c == f)eat++;
+    return eat;
+}
+int bite(int a, int b, int c, int d, int e, int f)
+{
+    int bite = 0;
+    if(a == e || a == f)bite++;
+    if(b == d || b == f)bite++;
+    if(c == d || c == e)bite++;
+    return bite;
+    
+}
+bool gameSet(int a)
+{
+    if(a == 3) return true;
+    else return false;
+}
+int main()
+{
+    int a,b,c;
+    decideNumbers(a,b,c);
+    bool test = false;
+    int count = 0;
+    vector<int> incorrectNum;
+    int i = 0;
+    while(!test)
+    {
+        int d,e,f;
+        cout<< "type three digits" << endl;
+        cin>>d>>e>>f;
+        cout<<eat(a,b,c,d,e,f)<<"eat"<<endl;
+        cout<<bite(a,b,c,d,e,f)<<"bite"<<endl;
+        if(eat(a,b,c,d,e,f) == 0&&bite(a,b,c,d,e,f) == 0)
+        {
+            incorrectNum(i) = d;i++;
+            incorrectNum(i) = e;i++;
+            incorrectNum(i) = f;i++;
+        }
+        count++;
+        if(gameSet(eat(a,b,c,d,e,f)))test= true;
+    }
+    cout << "You Win!: "<<count <<" times attempt"<< endl;
+    return 0;
+}
